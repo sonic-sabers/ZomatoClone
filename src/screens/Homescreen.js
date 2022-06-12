@@ -41,6 +41,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import Icons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 
 const Header = () => {
@@ -112,7 +113,9 @@ const Search = () => {
 				style={{
 					fontSize: 16.5,
 					flex: 1,
+					color: '#00000090'
 				}}
+				placeholderTextColor='#00000090'
 				placeholderTextStyle=
 				{{
 					fontWeight: 400,
@@ -145,7 +148,7 @@ const Filters = () => {
 	return (
 		<View
 			style={{
-				paddingHorizontal: -10
+				// paddingLeft: 10
 			}}
 		>
 			<ScrollView
@@ -155,6 +158,7 @@ const Filters = () => {
 					// width: '100%',
 					height: 40,
 					marginTop: 10,
+					paddingHorizontal: 7
 				}}>
 				<TouchableOpacity
 					style={styles.filterItem}
@@ -207,7 +211,11 @@ const Filters = () => {
 
 const Offers = () => {
 	return (
-		<View>
+		<View
+			style={{
+				paddingHorizontal: 10,
+			}}
+		>
 			<Text
 				style={styles.texts}>
 				Check this out!
@@ -260,7 +268,8 @@ const Brands = ([
 		rating: 5,
 		Time: '30 ',
 		src: require('../assets/Images/Macd.jpg'),
-		key: '5'
+		key: '5',
+		Offer: '20% OFF'
 	},
 	{
 		title: "Domino's Pizza",
@@ -289,9 +298,14 @@ const Brands = ([
 
 const Topbrands = () => {
 	return (
-		<View>
+		<View
+			style={{
+				paddingHorizontal: 10,
+			}}>
 			<Text
-				style={styles.texts}>
+				style={[[styles.texts, {
+
+				}],]}>
 				Top brands for you
 			</Text>
 			<View
@@ -300,10 +314,10 @@ const Topbrands = () => {
 				{Brands.map((brand) => (
 					<TouchableOpacity
 						key={brand.key}
-						style={{
+						style={[{
 							marginHorizontal: 2,
 							marginBottom: 4,
-						}}
+						}, styles.shadow1]}
 						onPress={() => {
 							console.log('Hi')
 						}}
@@ -314,10 +328,34 @@ const Topbrands = () => {
 								width: brandWidth,
 								borderRadius: 100,
 								borderWidth: 1,
-								borderColor: '#b9b9b9',
+								borderColor: '#b9b9b940'
 							}}
 							source={brand.src}
 						/>
+						{brand.Offer &&
+							<View
+								style={{
+									backgroundColor: '#2570EC',
+									// paddingHorizontal: 1,
+									width: brandWidth / 1.4,
+									borderRadius: 5,
+									alignSelf: 'center',
+									justifyContent: 'center',
+									alignItems: 'center',
+									padding: 2,
+									marginTop: -17
+								}}
+							>
+								<Text style={[{
+									fontSize: 11,
+									fontWeight: '500',
+									fontFamily: 'Inter',
+									color: '#ffffff',
+
+								}]}>
+									{brand.Offer}</Text>
+							</View>
+						}
 						<Text style={[styles.brandtext, {
 							color: '#000',
 						}]}>{brand.title}</Text>
@@ -332,7 +370,7 @@ const Topbrands = () => {
 					</TouchableOpacity>
 				))}
 			</View>
-		</View>
+		</View >
 	)
 }
 
@@ -347,7 +385,7 @@ const Fooditems = ([
 
 const Foodcomponent = () => {
 	return (
-		<TouchableOpacity
+		<TouchableWithoutFeedback
 			style={[styles.shadow1, {
 				borderRadius: 10,
 				backgroundColor: '#fff',
@@ -358,12 +396,19 @@ const Foodcomponent = () => {
 			<Image
 				style={{
 					height: 140,
-					width: 200,
-					borderRadius: 10,
+					width: 210,
+					borderTopRightRadius: 10,
+					borderTopLeftRadius: 10,
+
 				}}
 				source={require('../assets/Images/Food.jpg')}
 			/>
-			<View style={{ padding: 5, }}>
+			<View style={{
+				padding: 5,
+				// backgroundColor: 'green',
+				borderBottomRightRadius: 10,
+				borderBottomLeftRadius: 10,
+			}}>
 
 				<View
 					style={{
@@ -473,7 +518,7 @@ const Foodcomponent = () => {
 					</TouchableOpacity>
 				</View>
 			</View>
-		</TouchableOpacity>
+		</TouchableWithoutFeedback>
 	)
 }
 const url = 'https://image.similarpng.com/very-thumbnail/2020/04/Craft-beef-burger-with-cheese-png.png'
@@ -484,23 +529,34 @@ export default function Homescreen() {
 			style={{
 				flex: 1,
 				backgroundColor: '#fff',
-				padding: 10,
+				// mariginTop: -15,
+				paddingHorizontal: 10,
 			}}>
-			<Header />
 			<Search />
-			<Filters />
+			<View
+				style={{
+					marginHorizontal: -10
+				}}
+			>
+				<Filters />
+			</View>
 			<ScrollView style={{
-				flex:1,
+				flex: 1,
+				marginHorizontal: -10
 			}}>
 
 				<Offers />
 				<Topbrands />
 				<View>
 					<Text
-						style={styles.texts}>
+						style={[styles.texts, {
+							marginLeft: 10,
+						}]}>
 						Quick checkout munchies
 					</Text>
-					<ScrollView horizontal showsHorizontalScrollIndicator={false}>
+					<ScrollView
+						style={{ paddingHorizontal: 10, }}
+						horizontal showsHorizontalScrollIndicator={false}>
 						<Foodcomponent />
 						<Foodcomponent />
 						<Foodcomponent />
@@ -508,9 +564,7 @@ export default function Homescreen() {
 						<Foodcomponent />
 					</ScrollView>
 				</View>
-				<Text>Homescreen</Text>
 			</ScrollView>
-			<Text>Homescreen</Text>
 		</View >
 	)
 }
@@ -525,7 +579,7 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		paddingHorizontal: 8,
 		alignItems: 'center',
-		marginTop: 10,
+		// marginTop: 10,
 	},
 	filterItem: {
 		borderWidth: 2,
@@ -549,6 +603,7 @@ const styles = StyleSheet.create({
 		fontFamily: 'Inter',
 		color: '#000',
 		marginVertical: 7,
+
 	},
 	gridContainer: {
 		margin: 5,

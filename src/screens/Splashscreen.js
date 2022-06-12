@@ -54,7 +54,8 @@ export default function Splashscreen() {
                         fontSize: 70,
                         fontWeight: '900',
                         fontFamily: 'Inter',
-                        color: colors.white
+                        color: colors.white,
+                        fontFamily: 'Oswald-Medium',
                     }}>
                     zomato
                 </Text>
